@@ -1,0 +1,25 @@
+{
+  "name": "api-tontine-digitale",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/EssadeqBillouche/API-Tontine-Digitale#readme",
+  "bugs": {
+    "url": "https://github.com/EssadeqBillouche/API-Tontine-Digitale/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EssadeqBillouche/API-Tontine-Digitale.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
