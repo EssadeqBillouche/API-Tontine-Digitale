@@ -1,6 +1,8 @@
+import bcrypt from "bcrypt"
 export default class User {
+    static roles = ['admin', 'user'];
 
-    constructor(id = null, fisrtName, lastName, email, password, score, emailVerified = false, kncVerified = false)
+    constructor({id = null, fisrtName, lastName, email, password, score, emailVerified = false, kncVerified = false})
     {
         this.id = id;
         this.fisrtName = fisrtName;
@@ -25,7 +27,27 @@ export default class User {
         if(kncVerified){
             throw new Error('KNC aready verified ')
         }
+        this.kncVerified = true;
     }
+
+    setRole(role)
+    {
+        if(!User.roles.includes(role))
+        {
+            throw new Error('This role not allowed')
+        }
+        this.role = role;
+    }
+
+    async setHashedPassword()
+    {
+        this.password = await bcrypt.hash(this.password, 10);
+    }
+    async checkIfPasswordMatch(password)
+    {
+        return await bcrypt.compare(password, this.password);
+    }
+
 
     toJSON()
     {
