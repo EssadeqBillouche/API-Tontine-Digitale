@@ -1,68 +1,53 @@
-import bcrypt from "bcrypt"
-export default class User {
-    static roles = ['admin', 'user'];
+import bcrypt from "bcrypt";
 
-    constructor({id = null, fisrtName, lastName, email, password, score, emailVerified = false, kncVerified = false})
-    {
-        this.id = id;
-        this.fisrtName = fisrtName;
+export default class User {
+    static roles = ['GroupAdmin', 'user'];
+
+    constructor({ firstName, lastName, email, password, ...optionals}) {
+        this.id = optionals.id;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.score = score;
-        this.emailVerified = emailVerified;
-        this.kncVerified = kncVerified;
+        this.score = optionals.score;
+        this.emailVerified = optionals.emailVerified;
+        this.kncVerified = optionals.kncVerified;
+        this.role = optionals.role;
     }
 
-    verifyEmail ()
-    {
-        if(this.emailVerified){
-            throw new Error('Email aready verified')
+    verifyEmail() {
+        if (this.emailVerified) {
+            throw new Error('Email already verified');
         }
         this.emailVerified = true;
     }
 
-    verifyKnc()
-    {
-        if(kncVerified){
-            throw new Error('KNC aready verified ')
+    verifyKnc() {
+        if (this.kncVerified) { 
+            throw new Error('KNC already verified');
         }
         this.kncVerified = true;
     }
 
-    setRole(role)
-    {
-        if(!User.roles.includes(role))
-        {
-            throw new Error('This role not allowed')
-        }
-        this.role = role;
-    }
 
-    async setHashedPassword()
-    {
+    async setHashedPassword() {
         this.password = await bcrypt.hash(this.password, 10);
     }
-    async checkIfPasswordMatch(password)
-    {
+
+    async checkIfPasswordMatch(password) {
         return await bcrypt.compare(password, this.password);
     }
 
-
-    toJSON()
-    {
+    toJSON() {
         return {
-            "id" : this.id,
-            "firstName" : this.fisrtName,
-            "lastName": this.lastName,
-            "email" : this.email,
-            "password" : this.password,
-            "score" : this.score,
-            "emailVerified" : this.emailVerified,
-            "kncVerified" : this.kncVerified 
-        }
+            firstName: this.firstName, 
+            lastName: this.lastName,
+            email: this.email,
+            password: this.password,
+            score: this.score,
+            role : this.role,
+            emailVerified: this.emailVerified,
+            kncVerified: this.kncVerified
+        };
     }
-
-
-
 }
