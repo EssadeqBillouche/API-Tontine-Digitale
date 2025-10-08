@@ -19,11 +19,12 @@ export default class UserRepository
     async createUser(User)
     {
         try{
-            const user = new UserModel
-        (User.toJSON)
-        return await user.save();
+            const user = new UserModel(User.toJSON())
+            await user.save();
+            return user
+
         }catch(err){
-            
+            throw err
         }
     }
 }
