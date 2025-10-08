@@ -1,7 +1,11 @@
 import { Router } from "express";
-import * as UserConstroller from "../controllers/UserController.js"
+import AuthController from "../../presentation/controllers/UserController.js";
+import UserService from "../../business/services/UserService.js";
+
 const router = Router();
 
-router.post('/auth/register', UserConstroller.register);
+const userService = new UserService();
+const authController = new AuthController(userService);
 
+router.post('/register',  authController.register.bind(authController));
 export default router;
