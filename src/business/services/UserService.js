@@ -1,24 +1,25 @@
 import UserRepository from "../../persistence/repositories/UserRepository.js";
 import User from "../Entities/User.js";
 
-export default class UserService 
-{
-    constructor (UserRepository)
-    {
-        this.UserRepository = UserRepository;
+export default class UserService {
+    constructor() {
+        this.userRepository = new UserRepository();
     }
 
-    createUser(User)
-    {
-        const UserRepository = new this.UserRepository;
-
-        const user = UserRepository.findUserByEmail(User.email);
-
-        if(user)
-            {
-                throw new Error('Email Linked to another account');
+    async createUser(user) {
+        try {
+            const existingUser = await this.userRepository.findUserByEmail(user.email);
+            if (existingUser) {
+                throw new Error("Email already exists");
             }
-        return UserRepository.createUser(User);
+            await user.setHashedPassword();
+            
+            console.log('user entity from  service 1'+user.toJSON())
+            const createdUser = await this.userRepository.createUser(user);
+            return createdUser;
+        } catch (error) {
+            console.error("Error in UserService createUser:", error.message);
+            throw error;
+        }
     }
-
 }
