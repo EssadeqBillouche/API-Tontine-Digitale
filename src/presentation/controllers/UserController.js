@@ -25,10 +25,10 @@ export default class AuthController {
         try
         {
             const {email, password} = req.body;
-            const user = await this.userService.login(email, password);
-            console.log("check user entity from controller :", user);
+            const token = await this.userService.login(email, password);
+            console.log("check user entity from controller :", token);
             
-            res.status(200).json({ message : "login seccuess"})
+            res.status(200).json({ message : "login success", token})
         }
         catch(error)
         {
