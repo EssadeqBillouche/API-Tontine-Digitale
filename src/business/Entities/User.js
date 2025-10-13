@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 
 export default class User {
-    static roles = ['GroupAdmin', 'user'];
+    static roles = ['GroupAdmin', 'user','Admin'];
 
     constructor({ firstName, lastName, email, password, ...optionals}) {
         this.id = optionals.id;
