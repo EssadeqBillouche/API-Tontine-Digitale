@@ -3,9 +3,9 @@ import KYCRepository from "../../persistence/repositories/KYCRepository.js";
 
 export default class KYCService
 {
-    constructor (KYCRepository)
+    constructor ()
     {
-        this.KYCRepository = KYCRepository;
+        this.KYCRepository = new KYCRepository();
     }
     async verifyUser()
     {
