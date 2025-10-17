@@ -10,7 +10,8 @@ connectionDataBase();
 app.use(express.json());
 
 app.use('/api-v1/auth', authRouter);
-// app.use('/api-v1/KYC', )
+// app.use('/api-v1/KYC', )  
+
 app.use('/api-v1/group', groupRouter)
 
 export default app;
